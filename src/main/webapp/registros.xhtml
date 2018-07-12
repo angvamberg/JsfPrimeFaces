@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>angzin</title>
+</h:head>
+<body>
+	<div align="center">
+		<p:toolbar style="width:50%">
+			<f:facet name="left">
+				<h:graphicImage value="/resources/ninja.png" />
+				<h:link outcome="index.xhtml?faces-redirect=true">
+				</h:link>
+			</f:facet>
+			<f:facet name="right">
+				<p:button type="button" value="Index"
+					style="width:200px; height:50px;margin:40px 30px 0 0"
+					outcome="index.xhtml?faces-redirect=true"></p:button>
+				<p:button value="Registros"
+					style="width:200px; height:50px;margin:40px 35px 0 0"
+					outcome="registros.xhtml?faces-redirect=true"></p:button>
+			</f:facet>
+		</p:toolbar>
+		<br /> <br />
+
+		<h:form id="frm">
+			<p:growl />
+			<p:dataTable id="tabela" var="c"
+				value="#{gestaoClientesBean.clientes}"
+				emptyMessage="Nenhum registro encontrado :(" widgetVar="tabelaDados"
+				style="width:50%" paginator="true" paginatorPosition="bottom"
+				rows="10">
+				<p:column headerText="Id" sortBy="#{c.id}">
+					<h:outputText value="#{c.id}" />
+				</p:column>
+				<p:column headerText="Nome" filterBy="#{c.nome}"
+					filterMatchMode="contains" sortBy="#{c.nome}">
+					<h:outputText value="#{c.nome}" />
+				</p:column>
+				<p:column headerText="Login" sortBy="#{c.login}">
+					<h:outputText value="#{c.login}" />
+				</p:column>
+				<p:column headerText="Senha" sortBy="#{c.senha}">
+					<h:outputText value="#{c.senha}" />
+				</p:column>
+				<p:column headerText="Data da Anotação" sortBy="#{c.data}">
+					<h:outputText value="#{c.data}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Opções" style="text-align:center">
+					<p:commandButton icon="fa fa-pencil"
+						action="index.xhtml?faces-redirect=true">
+						<f:setPropertyActionListener value="#{c}"
+							target="#{gestaoClientesBean.cliente}" />
+					</p:commandButton>
+					<p:commandButton icon="fa fa-close" style="color:red"
+						action="#{gestaoClientesBean.removerRegistro()}"
+						oncomplete="PF('tabelaDados').clearFilters()" update="tabela">
+						<p:confirm header="Confirmar Exclusão"  message="Você deseja realmente excluir?" icon="ui-icon-alert"/>
+						<f:setPropertyActionListener value="#{c}"
+							target="#{gestaoClientesBean.cliente}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        		<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+        		<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    		</p:confirmDialog>
+		</h:form>
+		<footer> 
+			<br />
+			<br />
+			<hr style="width: 50%" />
+			Angleby Vamberg - 2018 
+		</footer>
+	</div>
+</body>
+</html>

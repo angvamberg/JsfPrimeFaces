@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>angzin</title>
+</h:head>
+<body>
+	<div align="center">
+		<p:toolbar style="width:50%">
+			<f:facet name="left">
+				<h:graphicImage value="/resources/ninja.png" />
+				<h:link outcome="index.xhtml?faces-redirect=true">
+				</h:link>
+			</f:facet>
+			<f:facet name="right">
+				<p:button type="button" value="Index"
+					style="width:200px; height:50px;margin:40px 30px 0 0"
+					outcome="index.xhtml?faces-redirect=true"></p:button>
+				<p:button value="Registros"
+					style="width:200px; height:50px;margin:40px 35px 0 0"
+					outcome="registros.xhtml?faces-redirect=true"></p:button>
+			</f:facet>
+		</p:toolbar>
+		<br /> <br />
+
+		<h:form style="align:center">
+			<p:growl />
+			<h:panelGrid columns="3" cellpadding="5" id="pnl">
+				<p:outputLabel value="Nome" for="nome" />
+				<p:inputText id="nome" required="true" autocomplete="off"
+					value="#{gestaoClientesBean.cliente.nome}" />
+				<p:message for="nome"/>
+					
+				<p:outputLabel value="Login" for="login" />
+				<p:inputText id="login" required="true"
+					value="#{gestaoClientesBean.cliente.login}" autocomplete="off" />
+				<p:message for="login"/>
+					
+				<p:outputLabel value="Senha" for="senha" />
+				<p:password id="senha" feedback="true"
+					promptLabel="Por favor, insira uma senha." weakLabel="Fraca"
+					goodLabel="Boa" strongLabel="Forte" required="true"
+					value="#{gestaoClientesBean.cliente.senha}" autocomplete="off" />
+				<p:message for="senha"/>	
+					
+				<p:outputLabel value="Data da Anotação" for="postagem" />
+				<p:calendar id="postagem" value="#{gestaoClientesBean.cliente.data}"
+					pattern="dd/MM/yyyy" mask="true" autocomplete="off" />
+				<p:message for="postagem"/>	
+				
+				<br />
+				<p:captcha label="Captcha" id="captcha" language="pt-br"/>
+				<p:message for="captcha"/>
+				
+					
+				<p:commandButton value="Cadastrar"
+					action="#{gestaoClientesBean.inserir}"
+					actionListener="#{gestaoClientesBean.inserirMensagem}"
+					update="@form" />
+			</h:panelGrid>
+		</h:form>
+
+		<footer> 
+			<br />
+			<br />
+			<hr style="width:50%"/>
+			Angleby Vamberg - 2018
+		</footer>
+	</div>
+</body>
+</html>
